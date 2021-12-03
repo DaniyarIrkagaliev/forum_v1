@@ -1,4 +1,4 @@
-package com.company.db;
+package com.company.utils;
 
 public class Text_Utils {
 
@@ -12,7 +12,7 @@ public class Text_Utils {
     public static final String TEXT_TABLE = "Имеющиеся таблицы:\n" +
             " \t   chat   |   users  |  topic  |  topic_ans";
 
-    public static final String TEXT_CHAT = "user_id, message, mes_time";
+    public static final String TEXT_CHAT = "mes_id,  user_id, message, mes_time";
     public static final String TEXT_USERS = "login, username, pass ";
     public static final String TEXT_TOPIC = "title, topic_description, topic_date, user_id ";
     public static final String TEXT_TOPIC_ANSW = "topic_id, message, mes_time, user_id ";

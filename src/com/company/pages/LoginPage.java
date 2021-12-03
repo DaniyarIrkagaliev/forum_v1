@@ -1,6 +1,7 @@
 //package com.company.pages;
 //
-//import com.company.Users.*;
+//import com.company.db.repository.Users;
+//import com.company.db.repository.Users.*;
 //
 //import java.security.NoSuchAlgorithmException;
 //import java.security.spec.InvalidKeySpecException;
@@ -15,7 +16,6 @@
 //
 //        Scanner scn = new Scanner(System.in);
 //        //todo добавить регистрацию
-//        //todo вместо кейсов и ифов - FSM
 //        System.out.println("Вход (1)     |      Регистрация (2)");
 //        int sw = scn.nextInt();
 //        int j = 0; //вошел или нет. 1 - вошел. 0 - нет
