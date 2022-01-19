@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataBase implements  DataBase_Utiller{
+public class UserDataBase implements DataBase_Utiller {
 
     //user_id, login, username, pass
     private static UserDataBase INSTANCE;

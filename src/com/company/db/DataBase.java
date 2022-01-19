@@ -19,10 +19,10 @@ public class DataBase {
         }
     }
 
-    public ResultSet executSelect(String querry) {
+    public ResultSet executSelect(String query) {
         ResultSet resultSet = null;
         try {
-            resultSet = stmt.executeQuery(querry);
+            resultSet = stmt.executeQuery(query);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

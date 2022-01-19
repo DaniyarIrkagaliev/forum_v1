@@ -52,7 +52,6 @@ public class MessageDataBase implements DataBase_Utiller {
                 rs.getString("message"), rs.getString("mes_time"));
     }
 
-    //todo throws убрать в try catch
 
     @Override
     public List<Items> getAll() throws SQLException {
