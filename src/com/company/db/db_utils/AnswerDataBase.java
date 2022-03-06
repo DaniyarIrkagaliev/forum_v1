@@ -1,0 +1,112 @@
+package com.company.db.db_utils;
+
+import com.company.db.DataBase;
+import com.company.db.repository.Answer;
+import com.company.db.repository.Items;
+import com.company.db.repository.Message;
+import com.company.utils.CurrentTime;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnswerDataBase implements  DataBase_Utiller{
+//" answ_id,  message, mes_time, user_id;
+
+    private static AnswerDataBase INSTANCE;
+    private static DataBase db;
+
+    public static AnswerDataBase getINSTANCE() {
+        if (INSTANCE == null) {
+            INSTANCE = new AnswerDataBase();
+            db = DataBase.getINSTANCE();
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    public void add(Items obj) {
+        try {
+            Answer answer = (Answer) obj;
+            String currentTime = CurrentTime.getCurrentTime();
+            db.executeUpdate("INSERT INTO topic_answ (topic_id, message, mes_time, user_id) VALUES('" +
+                    answer.getTopic_id() + "', '" + answer.getMessage() + "', '" + answer.getMes_time() + "', '"
+                    + answer.getUser_id() +"'); ");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void removeByID(Integer id) {
+        db.executeUpdate("DELETE FROM topic_answ WHERE answ_id = " + id + ";");
+    }
+
+    public List<Answer> getByTopId(Integer id) {
+        List<Answer> items = new ArrayList<>();
+        try {
+            ResultSet rs = db.executSelect("SELECT * FROM topic_answ WHERE  topic_id = " + id);
+            while (rs.next())
+                items.add(getByResultSet(rs));
+            rs.close();
+            return items;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    @Override
+    public Items getByID(Integer id) throws SQLException {
+        try {
+            ResultSet rs = db.executSelect("SELECT * FROM topic_answ WHERE topic_id = " + id);
+            rs.next();
+            Answer answer = getByResultSet(rs);
+            rs.close();
+            return answer;
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Items> getAll() throws SQLException {
+        List<Items> list = new ArrayList<>();
+        try {
+            ResultSet rs = db.executSelect("SELECT * FROM topic_answ");
+            while (rs.next())
+                list.add(getByResultSet(rs));
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public void printTable() throws SQLException {
+        List<Items> list = getAll();
+        System.out.println("DataBase Answ:");
+        for (Items answer : list) {
+            System.out.println(answer.toString());
+        }
+    }
+
+    public Answer getByResultSet(ResultSet rs) {
+        try {
+            return new Answer(
+                    rs.getInt("answ_id"),
+                    rs.getInt("topic_id"),
+                    rs.getString("message"),
+                    rs.getString("mes_time"),
+                    rs.getInt("user_id")
+            );
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Answer getByResultSet");
+            return null;
+        }
+    }
+
+}
