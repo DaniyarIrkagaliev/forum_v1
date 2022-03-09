@@ -39,6 +39,11 @@
 
                 <td align="right"><a class="btn btn-warning"
                                      href="${pageContext.request.contextPath}/topic?id=${i.getID()}">More</a></td>
+            <%if(currentUser != null){
+                if (currentUser.getID() == 1) {%>
+            <td><a class="btn btn-danger"
+                   href="${pageContext.request.contextPath}/delete?table=3&id=${id}">Delete</a></td>
+            <%}}%>
         </tr>
     </c:forEach>
 </table>

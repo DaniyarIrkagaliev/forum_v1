@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
+
+import static com.company.utils.Password.generatePasswordHash;
 
 @WebServlet(name = "register", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
@@ -44,6 +48,13 @@ public class RegisterServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
+            try {
+                password = generatePasswordHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
+            }
             request.getParameter("username");
             request.getParameter("email");
             request.getParameter("password");
@@ -54,15 +65,6 @@ public class RegisterServlet extends HttpServlet {
             //TODO проверка на успешную регистрацию
             response.sendRedirect(getServletContext().getContextPath() + "/login.jsp");
 
-//            boolean registerResult = Helper.userRepository().add(newUser);
-//            if (registerResult) {
-//                response.sendRedirect("login");
-//            } else {
-//                request.setAttribute("message", "Something went wrong.");
-//                request.setAttribute("viewFile", "register.jsp");
-//                request.setAttribute("pageTitle", "Register");
-//                Helper.view(request, response);
-//            }
         }
 
     }

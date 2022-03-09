@@ -1,11 +1,9 @@
 package com.company.db.db_utils;
 
 import com.company.db.DataBase;
-import com.company.db.repository.Answer;
 import com.company.db.repository.Items;
 import com.company.db.repository.Topic;
 import com.company.db.repository.User;
-import com.company.utils.CurrentTime;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +28,6 @@ public class UserDataBase implements DataBase_Utiller {
     public void add(Items obj) {
         try {
             User user = (User) obj;
-
             db.executeUpdate("INSERT INTO users (login, username, pass) VALUES ('" +
                     user.getLogin() + "', '" + user.getUsername() + "', '" + user.getPassword() + "')");
 
@@ -53,7 +50,7 @@ public class UserDataBase implements DataBase_Utiller {
                 rs.getString("username"), rs.getString("pass"));
     }
 
-    public List<User> getByUserID(Integer id) throws SQLException {
+    public List<User> getByUserID(Integer id){
         List <User> items = new ArrayList<>();
         try {
             ResultSet rs = db.executSelect("SELECT * FROM users WHERE user_id=" + id);
@@ -82,7 +79,7 @@ public class UserDataBase implements DataBase_Utiller {
     }
 
     @Override
-    public void printTable() throws SQLException {
+    public void printTable(){
         List<Items> list = getAll();
         System.out.println("users table: ");
         for (Items user : list) {
@@ -106,15 +103,19 @@ public class UserDataBase implements DataBase_Utiller {
         }
     }
 
-
-    public User login(String login, String password) throws SQLException {
-        String query = String.format("SELECT * FROM users "
-                + "WHERE login = '" + login + "' AND pass = '" + password + "'");
+    public User selectBylogin(String login) throws SQLException {
+        String query = ("SELECT * FROM users WHERE username = '" + login+ "'");
         ResultSet rs = db.executSelect(query);
         User user = null;
         if (rs.next()) {
             user = getByResultSet(rs);
         }
         return user;
+    }
+
+    public String getUsernameByID(int id){
+        User user = (User) getByUserID(id);
+        String username = user.getUsername();
+        return username;
     }
 }

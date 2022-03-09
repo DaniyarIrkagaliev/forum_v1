@@ -2,9 +2,11 @@ package com.company.servlets;
 
 import com.company.db.db_utils.UserDataBase;
 import com.company.db.repository.User;
+import com.company.utils.Password;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -24,52 +26,44 @@ public class LoginServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
-    public static boolean checkParameters(String[] parameters, Map<String, String[]> parameterMap) {
-        for (String parameter : parameters) {
-            if (!parameterMap.containsKey(parameter)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] parameters = {"email", "password"};
-        boolean checkResult = checkParameters(parameters, request.getParameterMap());
 
-//todo убрать чекпарамс
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        User user = null;
+        boolean matched = false;
+        try {
+            user = UserDataBase.getINSTANCE().selectBylogin(email);
+            System.out.println("user= "+ user);
+            String userPass = user.getPassword();
+            System.out.println("userPass = "+ userPass);
+            matched = Password.validatePassword(password, userPass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
 
-        if (!checkResult) {
-            System.out.println("Ашипка 1 - не все заполнил");
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        if (matched) {
+            //сессионная ерунда
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            System.out.println("Успешный вход юзера с id = " + user.getID());
+//                session.setAttribute("id", user.getID());
+            int LogUserId = user.getID();
+            request.setAttribute("id", user.getID());
+            System.out.println(LogUserId);
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
 
         } else {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            User user = null;
-            try {
-                user = UserDataBase.getINSTANCE().login(email, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            if (user != null) {
-                //сессионная ерунда
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                System.out.println("Успешный вход юзера с id = " + user.getID());
-//                session.setAttribute("id", user.getID());
-
-                int LogUserId = user.getID();
-                request.setAttribute("id", Integer.parseInt(String.valueOf(LogUserId)));
-                getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
-
-            } else {
-                System.out.println("Ашипка 2 - накосячил в логине или пароле");
-                getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-            }
+            System.out.println("Ашипка 2 - накосячил в логине или пароле");
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
+
+
 }

@@ -36,6 +36,7 @@ public class DeleteServlet extends HttpServlet {
             }
             case 3 -> {
                 TopicDataBase.getINSTANCE().removeByID(id);
+                AnswerDataBase.getINSTANCE().removeByTopID(id);
                 getServletContext().getRequestDispatcher("/topics.jsp").forward(req, resp);
             }
             case 4 -> {

@@ -15,6 +15,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/topics.jsp">Topics</a>
             </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/profiles.jsp">Profiles</a>
+    </li>
     <% if (currentUser == null) {%>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>

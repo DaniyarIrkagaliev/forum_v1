@@ -12,21 +12,29 @@
 </head>
 <body class="container">
 <jsp:include page="patterns/navbar.jsp"/>
+<%if (currentUser != null) {if (currentUser.getID() == 1) {%>
+<td><a class="btn btn-danger"
+       href="${pageContext.request.contextPath}/delete?table=3&id=${id}">Delete Topic</a></td>
+<%}}%>
+<table>
+
+</table>
 
 <table class="table">
     <tr>
         <th>topic_id</th>
-        <th>title</th>
-        <th>description</th>
         <th>date</th>
         <th></th>
     </tr>
-
+    <th> Всего ответов на эту тему:</th>
+    <td>
+        ${answersC.getAnswCountByTop(id)}
+    </td>
     <c:forEach items="${topicsC.getByTopID(id)}" var="i">
+        <h1>${i.getTitle()}</h1>
+        <p>${i.getDescription()}</p>
         <tr>
             <td>${i.getID()}</td>
-            <td>${i.getTitle()}</td>
-            <td>${i.getDescription()}</td>
             <td>${i.getDate()}</td>
         </tr>
     </c:forEach>
@@ -41,18 +49,25 @@
     </tr>
 
     <c:forEach items="${answersC.getByTopId(id)}" var="i">
-    <tr>
-        <td>${i.getMessage()}</td>
-        <td>${i.getMes_time()}</td>
-        <td>${i.getUser_id()}</td>
-        </c:forEach>
+        <tr>
+            <td>${i.getMessage()}</td>
+            <td>${i.getMes_time()}</td>
+            <td>${usID = i.getUser_id()}</td>
 
-            <% if (currentUser != null) {%>
+            <% if (currentUser != null) { if (currentUser.getID() == 1) {%>
+            <td><a class="btn btn-danger"
+                   href="${pageContext.request.contextPath}/delete?table=1&id=${i.getID()}">Delete</a></td>
+            <%}}%>
+        </tr>
+    </c:forEach>
+
+
+    <% if (currentUser != null) {%>
     <tr>
-        <td><a class="btn btn-success" href="${pageContext.request.contextPath}/add?table=1&topic=${id}">Add
-            answ</a></td>
+        <td><a class="btn btn-success" href="${pageContext.request.contextPath}/add?table=1&topic=${id}">Add answ</a></td>
     </tr>
-    <% }%>
+    <%}%>
+
 
 </table>
 </body>

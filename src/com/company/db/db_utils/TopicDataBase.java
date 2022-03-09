@@ -44,11 +44,11 @@ public class TopicDataBase implements DataBase_Utiller {
     }
 
     @Override
-    public Items getByID(Integer id) throws SQLException {
+    public Items getByID(Integer id){
         return null;
     }
 
-    public List<Topic> getByTopID(Integer id) throws SQLException {
+    public List<Topic> getByTopID(Integer id){
         List <Topic> items = new ArrayList<>();
         try {
             ResultSet rs = db.executSelect("SELECT * FROM topic WHERE topic_id=" + id);
@@ -62,7 +62,7 @@ public class TopicDataBase implements DataBase_Utiller {
         }
     }
 
-    public List<Topic> getByUserID(Integer id) throws SQLException {
+    public List<Topic> getByUserID(Integer id){
         List <Topic> items = new ArrayList<>();
         try {
             ResultSet rs = db.executSelect("SELECT * FROM topic WHERE user_id=" + id);
@@ -91,7 +91,7 @@ public class TopicDataBase implements DataBase_Utiller {
     }
 
     @Override
-    public void printTable() throws SQLException {
+    public void printTable(){
         List<Items> list = getAll();
         System.out.println("DataBase topic:");
         for (Items topic : list) {
@@ -113,5 +113,12 @@ public class TopicDataBase implements DataBase_Utiller {
             System.out.println("Topic getByResultSet");
             return null;
         }
+    }
+
+    public int getTopCount(){
+        return getAll().size();
+    }
+    public int getTopCountByUser(int id){
+        return getByUserID(id).size();
     }
 }

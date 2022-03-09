@@ -2,6 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <table class="table">
+
+    <th>Topic Count</th>
+    <td>${topicsC.getTopCount()}</td>
     <tr>
         <th>topic_id</th>
         <th>title</th>

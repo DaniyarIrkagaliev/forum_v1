@@ -15,7 +15,6 @@ public class User implements Items {
         this.pass = pass;
     }
 
-
     //    @Override
     public boolean equels(Object o) {
         if (this == o) {
@@ -38,18 +37,6 @@ public class User implements Items {
         return "User{" +
                 "user_id = '" + user_id + ", login = " + login +
                 ", username = " + username + ", password = " + pass + '}';
-    }
-
-    public static User getByResultSet(ResultSet rs){
-        User user1 = null;
-        try {
-            user1 = new User(
-                    rs.getInt("user_id"), rs.getString("login"),
-                    rs.getString("username"), rs.getString("pass"));
-        }catch (Exception exception){
-            System.out.println(exception.getMessage());
-        }
-        return user1;
     }
 
     public String getUsername() {

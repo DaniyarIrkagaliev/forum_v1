@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.company.db.repository.User" %>
 <% User currentUser = (User) session.getAttribute("user");%>
-<%@page pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Menu</title>
@@ -25,11 +25,18 @@
     </tr>
     <c:forEach items="${messagesC.getAll()}" var="i">
         <tr>
-                <%--            TODO показывать юзернейм вместо юзер айди--%>
+
             <td>${i.getID()}</td>
+                <%--TODO показывать юзернейм вместо юзер айди--%>
             <td>${i.getUser_id()}</td>
             <td>${i.getMessage()}</td>
             <td>${i.getMes_time()}</td>
+
+            <%if (currentUser != null){
+                if (currentUser.getID() == 1) {%>
+            <td><a class="btn btn-danger"
+                   href="${pageContext.request.contextPath}/delete?table=2&id=${i.getID()}">Delete</a></td>
+            <%}}%>
         </tr>
     </c:forEach>
     <% if (currentUser != null) {%>
@@ -56,7 +63,7 @@
             <td>${i.getTitle()}</td>
             <td>${i.getDescription()}</td>
             <td>${i.getDate()}</td>
-<%--            todo отображение кол-ва ответов--%>
+                <%--            todo отображение кол-ва ответов--%>
             <td align="right"><a class="btn btn-warning"
                                  href="${pageContext.request.contextPath}/topic?id=${i.getID()}">More</a></td>
         </tr>

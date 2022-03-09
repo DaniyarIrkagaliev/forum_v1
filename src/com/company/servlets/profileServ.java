@@ -23,10 +23,16 @@ public class profileServ extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User loginUser = (User) session.getAttribute("user");
-        int LogUserId = loginUser.getID();
-        request.setAttribute("id", Integer.parseInt(String.valueOf(LogUserId)));
-        getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
-
+        String id = request.getParameter("id");
+        if(loginUser != null){
+            int LogUserId = loginUser.getID();
+            request.setAttribute("id", Integer.parseInt(String.valueOf(LogUserId)));
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
+        }
+        else if (id != null) {
+            request.setAttribute("id", Integer.parseInt(id));
+            getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
+        }
     }
 
     @Override
