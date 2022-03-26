@@ -12,7 +12,6 @@
 <jsp:include page="patterns/navbar.jsp"/>
 <div class="card-panel">
     <div class="row">
-        <t:message />
         <form class="col l6 s12 offset-l3" method="POST">
             <div class="row">
                 <div class="input-field col s6">

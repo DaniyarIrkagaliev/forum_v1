@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("utf8");
         String[] parameters = {"username", "email", "password"};
         boolean checkResult = checkParameters(parameters, request.getParameterMap());
 
@@ -43,7 +43,6 @@ public class RegisterServlet extends HttpServlet {
             System.out.println("Ашипка 1 - не все заполнил");
             getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
         } else {
-
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
@@ -55,9 +54,6 @@ public class RegisterServlet extends HttpServlet {
             } catch (InvalidKeySpecException e) {
                 e.printStackTrace();
             }
-            request.getParameter("username");
-            request.getParameter("email");
-            request.getParameter("password");
 
             UserDataBase.getINSTANCE().add(new User(0, email, username,  password));
 

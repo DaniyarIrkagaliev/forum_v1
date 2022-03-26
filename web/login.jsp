@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page pageEncoding="UTF-8"%>
+<%@page pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Login page</title>
@@ -10,18 +10,18 @@
 </head>
 <body class="container">
 <jsp:include page="patterns/navbar.jsp"/>
-<div class="card-panel" >
+<div class="card-panel">
     <div class="row">
-        <form class="col l6 s12 offset-l3" method="POST"align="center">
-            <div class="row" >
+        <form class="col l6 s12 offset-l3" method="POST" align="center">
+            <div class="row">
                 <div class="input-field col s12">
-                    <input name="email" id="email" class="validate" required="required" />
+                    <input name="email" id="email" class="validate" required="required"/>
                     <label for="email">юзернейм</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s12" >
-                    <input name="password" id="password" type="password" class="validate" required="required" />
+                <div class="input-field col s12">
+                    <input name="password" id="password" type="password" class="validate" required="required"/>
                     <label for="password">пароль</label>
                 </div>
             </div>

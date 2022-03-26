@@ -36,9 +36,9 @@ public class LoginServlet extends HttpServlet {
         boolean matched = false;
         try {
             user = UserDataBase.getINSTANCE().selectBylogin(email);
-            System.out.println("user= "+ user);
+//            System.out.println("user= "+ user);
             String userPass = user.getPassword();
-            System.out.println("userPass = "+ userPass);
+//            System.out.println("userPass = "+ userPass);
             matched = Password.validatePassword(password, userPass);
         } catch (SQLException e) {
             e.printStackTrace();

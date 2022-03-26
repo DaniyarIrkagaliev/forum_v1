@@ -64,7 +64,7 @@ public class AddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("user");
-
+        request.setCharacterEncoding("utf8");
         String strTable = request.getParameter("table");
         if (strTable == null)
             strTable = "0";
