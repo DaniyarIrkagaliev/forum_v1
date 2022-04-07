@@ -38,7 +38,7 @@ public class AnswerDataBase implements DataBase_Utiller {
         }
     }
 //2022-03-03 22:00:04
-    //2022-03-04 15:59:29
+//2022-03-04 15:59:29
     @Override
     public void removeByID(Integer id) {
         db.executeUpdate("DELETE FROM topic_answ WHERE answ_id = " + id + ";");

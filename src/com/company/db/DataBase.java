@@ -70,8 +70,7 @@ public class DataBase {
 
     public int executeUpdate(String query) {
         int rows = 0;
-        try /*(Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-             Statement statement = connection.createStatement())*/ {
+        try  {
             rows = statement.executeUpdate(query);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
